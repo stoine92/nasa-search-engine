@@ -5,7 +5,7 @@ import Layout from "./components/layout/layout";
 import About from './main/About';
 import Login from './main/login/Login'
 
-import { initializeApp } from "firebase/app";
+
 import * as firebase from "./fire";
 
 
@@ -19,6 +19,7 @@ function App() {
 
 
   const handleSignUp = (e) => {
+    clearError();
     e.preventDefault();
     clearInput();
    const auth =  firebase.auth;
@@ -30,30 +31,37 @@ function App() {
   })
   .catch((error) => {
     const errorCode = error.code;
-    const errorMessage = error.message;
+    
     switch (errorCode){
       case "auth/email-already-in-use":
-        setEmailError("Email is already in use")
+        setEmailError("Email is already in use");
         break;
     }
   });
   }
 
   const handleLogin = (e) => { 
+    clearError();
     e.preventDefault();
     clearInput();
+    
     const auth = firebase.auth;
 
     firebase.signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-    // Signed in 
     const user = userCredential.user;
    
-    
   })
   .catch((error) => {
     const errorCode = error.code;
-    const errorMessage = error.message;
+    console.log(errorCode);
+   
+    switch(errorCode){
+      case "auth/invalid-email":
+      case "auth/wrong-password":
+      case "auth/user-not-found":
+        setEmailError("Wrong username or password")
+    }
   });
   }
 
@@ -73,11 +81,22 @@ function App() {
     const auth = firebase.auth;
     auth.signOut(); 
 }
+  const deleteUser = () => {
+    
+   const auth = firebase.auth;
+    const user = auth.currentUser;
+
+    
+    firebase.deleteUser(user)
+  }
 
   const clearInput = () =>{
     setEmail("");
     setPassword("")
 
+  }
+  const clearError = () => {
+    setEmailError("");
   }
 
 useEffect(() => {
@@ -101,6 +120,7 @@ useEffect(() => {
           handleAuthState={handleAuthState}
           signOut={signOut}
           emailError={emailError}
+          deleteUser={deleteUser}
       /></Route>
       <Route path='/about'><About /></Route>
     </Switch>

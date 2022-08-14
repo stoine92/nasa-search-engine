@@ -13,7 +13,8 @@ const {
     // isAuthenticated
     handleAuthState,
     signOut,
-    emailError
+    emailError,
+    deleteUser
 } = props;
 
 
@@ -27,6 +28,10 @@ function logOut (e){
     signOut();
 }
 
+function deleted (e) {
+    e.preventDefault();
+    deleteUser();
+}
     return ( 
         <>
             <div>
@@ -86,6 +91,10 @@ function logOut (e){
                 onClick={logOut}
                 >Logout</button>
                 {emailError !="" ? <h3>{emailError}</h3> : <></>}
+
+                <button
+                onClick={deleted}
+                >Delete</button>
          </>
         
     )
