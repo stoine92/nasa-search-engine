@@ -1,14 +1,9 @@
-import FooterStyles from './Footer.module.css'
+import React from "react";
+import './Footer.module.css'
 
-const Footer = () => {
-
-
-    return(
-        <footer >
-             <h3 className={FooterStyles.footer}>Created by Stoyan Nikolov | &copy; 2022</h3>
-        </footer>
-       
-    )   
+function Footer() {
+  
+  return <footer className="footer"><p className="footer-paragraph">Created by Stoyan Nikolov | &copy;</p></footer>;
 }
 
 export default Footer;
