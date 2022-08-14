@@ -3,7 +3,7 @@ import './Footer.module.css'
 
 function Footer() {
   
-  return <footer className="footer"><p className="footer-paragraph">Created by Stoyan Nikolov | &copy;</p></footer>;
+  return <footer className="footer"><p className="footer-paragraph">Created by Stoyan Nikolov | &copy; 2022</p></footer>;
 }
 
 export default Footer;

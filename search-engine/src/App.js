@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Route, Switch } from "react-router-dom";
 import Layout from "./components/layout/layout";
 
@@ -15,43 +15,74 @@ function App() {
     const [email, setEmail] = useState('') 
     const [password, setPassword] = useState('') 
     const [hasAccount, setHasAccount] = useState(false);
+    const [emailError, setEmailError] = useState('')
 
 
-  const handleSignUp = () => {
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    clearInput();
    const auth =  firebase.auth;
 
    firebase.createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-    // Signed in 
     const user = userCredential.user;
     
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    // ..
+    switch (errorCode){
+      case "auth/email-already-in-use":
+        setEmailError("Email is already in use")
+        break;
+    }
   });
   }
 
-  // const handleLogin = () => { 
-  //   const auth = firebase.auth;
+  const handleLogin = (e) => { 
+    e.preventDefault();
+    clearInput();
+    const auth = firebase.auth;
 
-  //   firebase.signInWithEmailAndPassword(auth, email, password)
-  //   .then((userCredential) => {
-  //   // Signed in 
-  //   const user = userCredential.user;
-  //   // ...
-  // })
-  // .catch((error) => {
-  //   const errorCode = error.code;
-  //   const errorMessage = error.message;
-  // });
-  // }
-
-  const handleLogin = () => {
-    console.log(firebase);
+    firebase.signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+   
+    
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
   }
 
+  const handleAuthState = () => {
+    const auth = firebase.auth;
+
+    firebase.onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log(uid);
+        
+     } 
+    });
+  }
+
+  const signOut = () => {
+    const auth = firebase.auth;
+    auth.signOut(); 
+}
+
+  const clearInput = () =>{
+    setEmail("");
+    setPassword("")
+
+  }
+
+useEffect(() => {
+  handleAuthState();
+}, []);
 
   return (
     <>
@@ -67,8 +98,11 @@ function App() {
           setHasAccount={setHasAccount}
           handleSignUp={handleSignUp}
           handleLogin={handleLogin}
+          handleAuthState={handleAuthState}
+          signOut={signOut}
+          emailError={emailError}
       /></Route>
-      <Route path='/about' component={About} />
+      <Route path='/about'><About /></Route>
     </Switch>
     </Layout>
     

@@ -11,8 +11,21 @@ const {
     // emailError,
     // passwordError,
     // isAuthenticated
+    handleAuthState,
+    signOut,
+    emailError
 } = props;
 
+
+function authState (e){
+    e.preventDefault();
+    handleAuthState()
+}
+
+function logOut (e){
+    e.preventDefault();
+    signOut();
+}
 
     return ( 
         <>
@@ -47,6 +60,8 @@ const {
                 onClick={handleSignUp}
                 >Sign Up
                 </button>
+                
+                
                 <p>Have an account ? </p>
                 <span onClick={() => setHasAccount(true)}>Login</span>
                 </>
@@ -64,6 +79,13 @@ const {
                
             }
         </form> 
+                 <button
+                onClick={authState}
+                >Test</button>
+             <button 
+                onClick={logOut}
+                >Logout</button>
+                {emailError !="" ? <h3>{emailError}</h3> : <></>}
          </>
         
     )
