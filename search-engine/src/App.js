@@ -4,31 +4,30 @@ import Layout from "./components/layout/layout";
 
 import About from './main/About';
 import Login from './main/login/Login'
-
+import SearchBar from './main/searchBar/SearchBar';
 
 import * as firebase from "./fire";
 
 
 
 function App() {
-
-    const [email, setEmail] = useState('') 
-    const [password, setPassword] = useState('') 
+    const [user, setUser] = useState(null);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [hasAccount, setHasAccount] = useState(false);
-    const [emailError, setEmailError] = useState('')
+    const [emailError, setEmailError] = useState('');
 
 
-  const handleSignUp = (e) => {
+  const handleSignUp = () => {
     clearError();
-    e.preventDefault();
     clearInput();
    const auth =  firebase.auth;
 
    firebase.createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-    const user = userCredential.user;
+  //   .then((userCredential) => {
+  //   const user = userCredential.user;
     
-  })
+  // })
   .catch((error) => {
     const errorCode = error.code;
     
@@ -36,22 +35,22 @@ function App() {
       case "auth/email-already-in-use":
         setEmailError("Email is already in use");
         break;
+        default: break;
     }
   });
   }
 
-  const handleLogin = (e) => { 
+  const handleLogin = () => { 
     clearError();
-    e.preventDefault();
     clearInput();
     
     const auth = firebase.auth;
 
     firebase.signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-    const user = userCredential.user;
-   
-  })
+  //   .then((userCredential) => {
+  //   const userLog = userCredential.user;
+    
+  // })
   .catch((error) => {
     const errorCode = error.code;
     console.log(errorCode);
@@ -60,7 +59,10 @@ function App() {
       case "auth/invalid-email":
       case "auth/wrong-password":
       case "auth/user-not-found":
-        setEmailError("Wrong username or password")
+        setEmailError("Wrong username or password");
+        break;
+        default: break;
+        
     }
   });
   }
@@ -72,22 +74,24 @@ function App() {
       if (user) {
         const uid = user.uid;
         console.log(uid);
-        
-     } 
+        setUser(Boolean(user));
+     } else{
+      setUser(null);
+     }
     });
   }
 
   const signOut = () => {
     const auth = firebase.auth;
     auth.signOut(); 
+    
 }
   const deleteUser = () => {
     
    const auth = firebase.auth;
     const user = auth.currentUser;
-
-    
-    firebase.deleteUser(user)
+     firebase.deleteUser(user)
+     
   }
 
   const clearInput = () =>{
@@ -101,7 +105,7 @@ function App() {
 
 useEffect(() => {
   handleAuthState();
-}, []);
+}, [handleAuthState]);
 
   return (
     <>
@@ -121,8 +125,10 @@ useEffect(() => {
           signOut={signOut}
           emailError={emailError}
           deleteUser={deleteUser}
+          isAuthenticated={Boolean(user)}
       /></Route>
       <Route path='/about'><About /></Route>
+      <Route path="/search" component={SearchBar}/>
     </Switch>
     </Layout>
     

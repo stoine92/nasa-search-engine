@@ -1,3 +1,6 @@
+import {Switch, Redirect} from 'react-router-dom';
+
+
 const Login = (props) => {
 const {
     email,
@@ -8,15 +11,25 @@ const {
     handleSignUp,
     hasAccount,
     setHasAccount,
-    // emailError,
-    // passwordError,
-    // isAuthenticated
+    isAuthenticated,
     handleAuthState,
     signOut,
     emailError,
     deleteUser
 } = props;
 
+// let history = useHistory();
+
+function loginFunc (e) {
+    e.preventDefault();
+    handleLogin()
+    // useHistory.push('/')
+}
+
+function signUpFunc (e) {
+    e.preventDefault();
+    handleSignUp();
+}
 
 function authState (e){
     e.preventDefault();
@@ -58,43 +71,47 @@ function deleted (e) {
            
 
             {
-                !hasAccount ? 
+                !hasAccount ? (
                 <>
                 <button 
                 type="submit"
-                onClick={handleSignUp}
+                onClick={signUpFunc}
                 >Sign Up
                 </button>
                 
                 
                 <p>Have an account ? </p>
                 <span onClick={() => setHasAccount(true)}>Login</span>
-                </>
-                :
+                </>)
+                : (
                 <>  
                  <button
                   type="submit"
-                  onClick={handleLogin}
+                  onClick={loginFunc}
                   >
                   Login
                   </button>
                 <p>Don't have an account ? </p>
                 <span onClick={() => setHasAccount(false)}>Register</span>
+                {isAuthenticated ? (<Redirect  to="/search" /> ) : (<></>)}
                 </>
-               
+                )
             }
+            
         </form> 
                  <button
                 onClick={authState}
                 >Test</button>
              <button 
+                type='submit'
                 onClick={logOut}
                 >Logout</button>
-                {emailError !="" ? <h3>{emailError}</h3> : <></>}
+                {emailError !=="" ? <h3>{emailError}</h3> : <></>}
 
                 <button
                 onClick={deleted}
                 >Delete</button>
+                
          </>
         
     )
