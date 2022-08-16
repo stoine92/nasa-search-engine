@@ -1,4 +1,4 @@
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 
 const Login = (props) => {
@@ -93,7 +93,7 @@ function deleted (e) {
                   </button>
                 <p>Don't have an account ? </p>
                 <span onClick={() => setHasAccount(false)}>Register</span>
-                {isAuthenticated ? console.log(isAuthenticated)  : (<></>)}
+                {isAuthenticated ? <Navigate replace to="/search" /> : ""}
                 </>
                 )
             }

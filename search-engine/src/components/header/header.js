@@ -1,7 +1,17 @@
-const Header = () => {
+const Header = ({isAuthenticated, user}) => {
 
+   
     return(
-        <h1> this will be my header</h1>
+        <header>
+            <h1> this will be my header</h1>
+            <ul>
+                <li>Home</li>
+                <li>About</li>
+                <li>Contact us</li>
+                {isAuthenticated? <p>Welcome, {user.email}</p> : <li>Login/Register</li> }
+            </ul>
+        </header>
+        
     )
 }
 

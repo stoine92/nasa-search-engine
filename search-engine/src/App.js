@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import Layout from "./components/layout/layout";
 
-import About from './main/About';
 import Login from './main/login/Login'
 import SearchBar from './main/searchBar/SearchBar';
 
@@ -16,7 +15,7 @@ function App() {
     const [password, setPassword] = useState('');
     const [hasAccount, setHasAccount] = useState(false);
     const [emailError, setEmailError] = useState('');
-
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleSignUp = () => {
     clearError();
@@ -49,7 +48,7 @@ function App() {
     firebase.signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
     console.log(userCredential.user.email);
-    
+    setIsAuthenticated(true);
   })
   .catch((error) => {
     const errorCode = error.code;
@@ -84,7 +83,7 @@ function App() {
   const signOut = () => {
     const auth = firebase.auth;
     auth.signOut(); 
-    
+    setIsAuthenticated(false);
 }
   const deleteUser = () => {
     
@@ -109,9 +108,12 @@ useEffect(() => {
 
   return (
     <>
-    <Layout>
+    <Layout 
+    isAuthenticated={isAuthenticated}
+    user={user}
+    >
     <Routes>
-      <Route path="/" element={<Login 
+      <Route path="/login-register" element={<Login 
           email={email}
           setEmail={setEmail}
           password={password}
@@ -124,11 +126,10 @@ useEffect(() => {
           signOut={signOut}
           emailError={emailError}
           deleteUser={deleteUser}
-          isAuthenticated={Boolean(user)}
-      />} exact />
-        
-      <Route path='/about' element={<About /> }/>
-      <Route path="/search" element={<SearchBar />}/>
+          isAuthenticated={isAuthenticated}
+      />} />
+     
+       <Route path="/search" element={<SearchBar />}/>
     </Routes> 
     </Layout>
     
