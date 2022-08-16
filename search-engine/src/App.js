@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/layout";
 
 import About from './main/About';
@@ -47,10 +47,10 @@ function App() {
     const auth = firebase.auth;
 
     firebase.signInWithEmailAndPassword(auth, email, password)
-  //   .then((userCredential) => {
-  //   const userLog = userCredential.user;
+    .then((userCredential) => {
+    console.log(userCredential.user.email);
     
-  // })
+  })
   .catch((error) => {
     const errorCode = error.code;
     console.log(errorCode);
@@ -74,7 +74,7 @@ function App() {
       if (user) {
         const uid = user.uid;
         console.log(uid);
-        setUser(Boolean(user));
+        setUser(user);
      } else{
       setUser(null);
      }
@@ -110,9 +110,8 @@ useEffect(() => {
   return (
     <>
     <Layout>
-    <Switch>
-      <Route path="/" exact>
-        <Login 
+    <Routes>
+      <Route path="/" element={<Login 
           email={email}
           setEmail={setEmail}
           password={password}
@@ -126,10 +125,11 @@ useEffect(() => {
           emailError={emailError}
           deleteUser={deleteUser}
           isAuthenticated={Boolean(user)}
-      /></Route>
-      <Route path='/about'><About /></Route>
-      <Route path="/search" component={SearchBar}/>
-    </Switch>
+      />} exact />
+        
+      <Route path='/about' element={<About /> }/>
+      <Route path="/search" element={<SearchBar />}/>
+    </Routes> 
     </Layout>
     
     </>
