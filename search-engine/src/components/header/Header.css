@@ -5,7 +5,7 @@ header {
     background-color: #24252a;
 
     display: flex;
-    justify-content:  space-between;
+    justify-content:  flex-end;
     align-items: center;
     padding: 15px 10%;
 }
@@ -23,7 +23,7 @@ header {
 .header-list-li {
     list-style: none;
     display: inline-block;
-    padding: 0px 20px;
+    padding: 0px 15px;
     transition: all 0.3s ease 0s;
     
 }
@@ -36,18 +36,22 @@ header {
     font-style: sans-serif;
     font-weight: 500;
     font-size: 22px;
+    margin-right: auto;
    
 }
 
 
  
 .login-logout {
+    font-size: 16px;
+    font-style: sans-serif;
     padding: 9px 25px;
     background-color: rgba(0,136,139,1);
     border: none;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease 0s;
+    margin-left: 60px;
 }
 .login-logout:hover {
     background-color: rgba(0,136,139,0.8);

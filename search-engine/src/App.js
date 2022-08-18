@@ -7,7 +7,8 @@ import SearchBar from './main/searchBar/SearchBar';
 import Home from './main/home/Home';
 
 import * as firebase from "./fire";
-
+ 
+// API key = MxoEpFHG0Pqrk7aNRNZ4LpqYLoCkY3kLbMibjJHh
 
 
 function App() {
@@ -18,6 +19,9 @@ function App() {
     const [hasAccount, setHasAccount] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
+
 
   const handleSignUp = () => {
     clearError();
@@ -104,13 +108,14 @@ useEffect(() => {
   handleAuthState();
 }, []);
 
+
+
   return (
     <>
     <Layout 
     isAuthenticated={isAuthenticated}
     setIsAuthenticated={setIsAuthenticated}
     user={user}
-    // signOut={signOut}
     >
       
     <Routes>

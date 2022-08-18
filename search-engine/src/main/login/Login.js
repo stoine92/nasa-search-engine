@@ -1,4 +1,5 @@
 import { Navigate } from 'react-router-dom';
+import './Login.css';
 
 
 const Login = (props) => {
@@ -39,60 +40,71 @@ function deleted (e) {
     e.preventDefault();
     deleteUser();
 }
-    return ( 
-        <>
-            <div>
-             <h1>Nasa Search Engine</h1>
-            </div>
-         
-         <form type='submit'>
-            <label htmlFor="email">Email address:</label>
-            <input 
-            type="email"
-            name="email"
-            value={email}
-            required
-            onChange={(e) => setEmail(e.target.value)}  
-            />
-            <label htmlFor="password">Password</label>
-            <input 
-            type="password" 
-            name="password" 
-            value={password}
-            required
-            onChange={(e) => setPassword(e.target.value)}   
-            />
-           
+    return ( <>
+   
+        <h1>Nasa Search Engine</h1>
 
-            {
-                !hasAccount ? (
-                <>
-                <button 
-                type="submit"
-                onClick={signUpFunc}
-                >Sign Up
-                </button>
+        <div className='login-form'>
+         
+        <div className='login'>
+            <div>
+            <form type='submit' className='loginContainer'>
+                <label htmlFor="email">Email address:</label>
+                <input 
+                className="input"
+                type="email"
+                name="email"
+                value={email}
+                required
+                onChange={(e) => setEmail(e.target.value)}  
+                />
+                <label htmlFor="password">Password</label>
+                <input 
+                className="input"
+                type="password" 
+                name="password" 
+                value={password}
+                required
+                onChange={(e) => setPassword(e.target.value)}   
+                />
+                <div className="btnContainer">
+                {!hasAccount ? (
+                    <>
+                    <button 
+                    className="button"
+                    type="submit"
+                    onClick={signUpFunc}
+                    >Sign Up
+                    </button>
+                    
+                    
+                    <p>Have an account ? </p>
+                    <span className="switchSpan" onClick={() => setHasAccount(true)}>Login</span>
+                    </>)
+                    : (
+                    <>  
+                    <button
+                    className="button"
+                    type="submit"
+                    onClick={loginFunc}
+                    >
+                    Login
+                    </button>
+                    <p>Don't have an account ? </p>
+                    <span className="switchSpan" onClick={() => setHasAccount(false)}>Register</span>
+                    {isAuthenticated ? <Navigate replace to="/search-bar" /> : ""}
+                    </>
+                    )
+                }
+
+                </div>
+           
                 
-                
-                <p>Have an account ? </p>
-                <span onClick={() => setHasAccount(true)}>Login</span>
-                </>)
-                : (
-                <>  
-                 <button
-                  type="submit"
-                  onClick={loginFunc}
-                  >
-                  Login
-                  </button>
-                <p>Don't have an account ? </p>
-                <span onClick={() => setHasAccount(false)}>Register</span>
-                {isAuthenticated ? <Navigate replace to="/search-bar" /> : ""}
-                </>
-                )
-            }
-            
-        </form> 
+            </form> 
+            </div>
+           
+        </div>
+         
                  <button
                 onClick={authState}
                 >Test</button>
@@ -102,8 +114,9 @@ function deleted (e) {
                 <button
                 onClick={deleted}
                 >Delete</button>
+            </div>
                 
-         </>
+            </>
         
     )
 }
