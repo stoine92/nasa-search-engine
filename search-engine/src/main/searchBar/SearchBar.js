@@ -8,26 +8,26 @@ const SearchBar = () => {
     const [nasaPhoto, setNasaPhoto] = useState([]);
     const [isRequested, setIsRequested] = useState(null); 
 
-   
-   
-    const onSearch = (test) => {
-        console.log('search', test);
-    }
-    
-    // API Request 
-    //   const URL = "https://images-api.nasa.gov/search?q=";
-          
-    
-      // useEffect(() => {
-      //   function fetchData (){
-      //     fetch(URL)
-      //   }
-    
-    
-      // },[]);
+    const [liElement, setLiElement] = useState('');
     
 
-      
+     const URL = "https://images-api.nasa.gov/search?q=";
+   
+    const onSearch = (e) => {
+        fetch(`${URL}${search}`)
+        .then(data=> data.json())
+        .then(output => {
+            let collections = output.collection.items.filter((item) => item.data[0].media_type === 'image');
+            for (let i = 0; i < 10; i++){
+                setNasaPhoto(collections[i].links[0].href);
+                console.log(nasaPhoto);
+            }
+            
+
+        } );
+    }
+    
+
    
     return (
         <div className='main-search'>
@@ -36,6 +36,8 @@ const SearchBar = () => {
             
         </form>
         <button onClick={() => onSearch(search)}>Search</button>
+
+        {liElement}
         </div>
     )
 }
