@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react'
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes, Navigate} from "react-router-dom";
 import Layout from "./components/layout/layout";
 
 import Login from './main/login/Login'
 import SearchBar from './main/searchBar/SearchBar';
+import Home from './main/home/Home';
 
 import * as firebase from "./fire";
 
 
 
 function App() {
+    // Authenticator 
     const [user, setUser] = useState(null);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -80,11 +82,7 @@ function App() {
     });
   }
 
-  const signOut = () => {
-    const auth = firebase.auth;
-    auth.signOut(); 
-    setIsAuthenticated(false);
-}
+
   const deleteUser = () => {
     
    const auth = firebase.auth;
@@ -104,14 +102,17 @@ function App() {
 
 useEffect(() => {
   handleAuthState();
-}, [handleAuthState]);
+}, []);
 
   return (
     <>
     <Layout 
     isAuthenticated={isAuthenticated}
+    setIsAuthenticated={setIsAuthenticated}
     user={user}
+    // signOut={signOut}
     >
+      
     <Routes>
       <Route path="/login-register" element={<Login 
           email={email}
@@ -123,13 +124,13 @@ useEffect(() => {
           handleSignUp={handleSignUp}
           handleLogin={handleLogin}
           handleAuthState={handleAuthState}
-          signOut={signOut}
           emailError={emailError}
           deleteUser={deleteUser}
           isAuthenticated={isAuthenticated}
       />} />
      
-       <Route path="/search" element={<SearchBar />}/>
+       <Route path="/search-bar" element={<SearchBar />}/>
+       <Route path="/home-page" element={<Home />}/>
     </Routes> 
     </Layout>
     

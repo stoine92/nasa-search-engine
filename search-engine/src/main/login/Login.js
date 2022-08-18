@@ -13,17 +13,16 @@ const {
     setHasAccount,
     isAuthenticated,
     handleAuthState,
-    signOut,
     emailError,
     deleteUser
 } = props;
 
-// let history = useHistory();
+
 
 function loginFunc (e) {
     e.preventDefault();
     handleLogin()
-    // useHistory.push('/')
+   
 }
 
 function signUpFunc (e) {
@@ -34,11 +33,6 @@ function signUpFunc (e) {
 function authState (e){
     e.preventDefault();
     handleAuthState()
-}
-
-function logOut (e){
-    e.preventDefault();
-    signOut();
 }
 
 function deleted (e) {
@@ -93,7 +87,7 @@ function deleted (e) {
                   </button>
                 <p>Don't have an account ? </p>
                 <span onClick={() => setHasAccount(false)}>Register</span>
-                {isAuthenticated ? <Navigate replace to="/search" /> : ""}
+                {isAuthenticated ? <Navigate replace to="/search-bar" /> : ""}
                 </>
                 )
             }
@@ -102,10 +96,7 @@ function deleted (e) {
                  <button
                 onClick={authState}
                 >Test</button>
-             <button 
-                type='submit'
-                onClick={logOut}
-                >Logout</button>
+            
                 {emailError !=="" ? <h3>{emailError}</h3> : <></>}
 
                 <button

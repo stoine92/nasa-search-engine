@@ -1,0 +1,55 @@
+header {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #24252a;
+
+    display: flex;
+    justify-content:  space-between;
+    align-items: center;
+    padding: 15px 10%;
+}
+
+
+.header-list {
+    font-style: sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: #ecf0f1;
+    text-decoration: none;
+   
+}
+
+.header-list-li {
+    list-style: none;
+    display: inline-block;
+    padding: 0px 20px;
+    transition: all 0.3s ease 0s;
+    
+}
+.header-list-li:hover{
+    color: #0088a9;
+}
+
+.header-h1 {
+    color: #ecf0f1;
+    font-style: sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+   
+}
+
+
+ 
+.login-logout {
+    padding: 9px 25px;
+    background-color: rgba(0,136,139,1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+.login-logout:hover {
+    background-color: rgba(0,136,139,0.8);
+
+}
