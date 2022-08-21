@@ -109,6 +109,41 @@ useEffect(() => {
 }, []);
 
 
+// API requests 
+
+    const [search, setSearch] = useState([]);
+    const [nasaPhoto, setNasaPhoto] = useState([]);
+    const [liElement, setLiElement] = useState([]);
+    
+
+     const URL = "https://images-api.nasa.gov/search?q=";
+    
+    const onSearch = (e) => {
+        // clearSearch();
+        clearSearch();
+        
+        // Request 
+        fetch(`${URL}${search}`)
+        .then(data=> data.json())
+        .then(output => {
+            let collections = output.collection.items.filter((item) => item.data[0].media_type === 'image');
+            for (let i = 0; i < 6; i++){
+                 setNasaPhoto(prevState => [...prevState ,collections[i]]); 
+            }
+         });
+         nasaPhoto.forEach(picture => {
+          console.log(picture.href);
+          let key = picture.data[0].nasa_id
+
+          setLiElement(prevState=> [...prevState, <li key={key}>{picture.href}</li>])
+         })
+  }
+
+    const clearSearch = () => {
+      setNasaPhoto([]);
+      setLiElement([]);
+    }
+
 
   return (
     <>
@@ -134,7 +169,14 @@ useEffect(() => {
           isAuthenticated={isAuthenticated}
       />} />
      
-       <Route path="/search-bar" element={<SearchBar />}/>
+       <Route path="/search-bar" element={<SearchBar 
+        onSearch={onSearch}
+        search={search}
+        setSearch={setSearch}
+        liElement={liElement}
+        setLiElement={setLiElement}
+        nasaPhoto={nasaPhoto}
+       />}/>
        <Route path="/home-page" element={<Home />}/>
     </Routes> 
     </Layout>
