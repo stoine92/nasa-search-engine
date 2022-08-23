@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Route, Routes, Navigate} from "react-router-dom";
 import Layout from "./components/layout/layout";
 import PrivateRoutes from './utils/PrivateRoutes'
+import { LoginContext } from './Context/LoginContext';
 
 import Login from './main/login/Login'
 import SearchBar from './main/searchBar/SearchBar';
@@ -137,7 +138,16 @@ useEffect(() => {
          .catch(err => console.log(err));
         
  }
+ 
+  // const testMe = () => {
+  //   nasaPhoto.map(picture => {
+  //     console.log(picture.href);
+  //     // let key = picture.data[0].nasa_id
 
+  //     // setLiElement(prevState=> [...prevState, <img key={key} src={picture.links[0].href} />])
+  //     // console.log(picture.links[0].href);
+  //   })
+  // }
 
     const clearSearch = () => {
       setNasaPhoto("");
@@ -152,8 +162,8 @@ useEffect(() => {
     setIsAuthenticated={setIsAuthenticated}
     user={user}
     >
-      
-    <Routes>
+      <LoginContext.Provider value={{isAuthenticated, setIsAuthenticated}}>
+      <Routes>
        <Route path="/home-page" element={<Home />}/>
 
        <Route path="/login-register" element={<Login 
@@ -184,6 +194,8 @@ useEffect(() => {
 
        </Route>
     </Routes> 
+      </LoginContext.Provider>
+    
     </Layout>
     
     </>

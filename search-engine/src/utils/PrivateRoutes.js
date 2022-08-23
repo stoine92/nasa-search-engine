@@ -1,7 +1,11 @@
 import { Outlet, Navigate } from "react-router-dom";    
+import { useContext } from "react";
+import { LoginContext } from "../Context/LoginContext";
 
 const PrivateRoutes = () => {
-    let auth = {"token": false}
+    const { isAuthenticated } = useContext(LoginContext);
+
+    let auth = {"token": isAuthenticated}
     return (
         auth.token ? <Outlet /> : <Navigate to="/login-register" />
     )
