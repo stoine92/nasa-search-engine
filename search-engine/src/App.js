@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Route, Routes, Navigate} from "react-router-dom";
 import Layout from "./components/layout/layout";
+import PrivateRoutes from './utils/PrivateRoutes'
 
 import Login from './main/login/Login'
 import SearchBar from './main/searchBar/SearchBar';
@@ -119,29 +120,37 @@ useEffect(() => {
      const URL = "https://images-api.nasa.gov/search?q=";
     
     const onSearch = (e) => {
-        // clearSearch();
-        clearSearch();
         
+        clearSearch();
         // Request 
         fetch(`${URL}${search}`)
         .then(data=> data.json())
         .then(output => {
             let collections = output.collection.items.filter((item) => item.data[0].media_type === 'image');
-            for (let i = 0; i < 6; i++){
-                 setNasaPhoto(prevState => [...prevState ,collections[i]]); 
-            }
-         });
-         nasaPhoto.forEach(picture => {
-          console.log(picture.href);
-          let key = picture.data[0].nasa_id
-
-          setLiElement(prevState=> [...prevState, <li key={key}>{picture.href}</li>])
+            setNasaPhoto(prevState =>  [...prevState ,collections]); 
+            // for (let i = 0; i < 6; i++){
+              
+            //      
+            // // }
+            // console.log(nasaPhoto);
          })
-  }
+         .catch(err => console.log(err));
+        
+ }
+ 
+  // const testMe = () => {
+  //   nasaPhoto.map(picture => {
+  //     console.log(picture.href);
+  //     // let key = picture.data[0].nasa_id
+
+  //     // setLiElement(prevState=> [...prevState, <img key={key} src={picture.links[0].href} />])
+  //     // console.log(picture.links[0].href);
+  //   })
+  // }
 
     const clearSearch = () => {
-      setNasaPhoto([]);
-      setLiElement([]);
+      setNasaPhoto("");
+      setLiElement("");
     }
 
 
@@ -154,30 +163,35 @@ useEffect(() => {
     >
       
     <Routes>
-      <Route path="/login-register" element={<Login 
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          hasAccount={hasAccount}
-          setHasAccount={setHasAccount}
-          handleSignUp={handleSignUp}
-          handleLogin={handleLogin}
-          handleAuthState={handleAuthState}
-          emailError={emailError}
-          deleteUser={deleteUser}
-          isAuthenticated={isAuthenticated}
-      />} />
-     
-       <Route path="/search-bar" element={<SearchBar 
-        onSearch={onSearch}
-        search={search}
-        setSearch={setSearch}
-        liElement={liElement}
-        setLiElement={setLiElement}
-        nasaPhoto={nasaPhoto}
-       />}/>
        <Route path="/home-page" element={<Home />}/>
+
+       <Route path="/login-register" element={<Login 
+                email={email}
+                setEmail={setEmail}
+                password={password}
+                setPassword={setPassword}
+                hasAccount={hasAccount}
+                setHasAccount={setHasAccount}
+                handleSignUp={handleSignUp}
+                handleLogin={handleLogin}
+                handleAuthState={handleAuthState}
+                emailError={emailError}
+                deleteUser={deleteUser}
+                isAuthenticated={isAuthenticated}
+            />} />
+
+       <Route element={<PrivateRoutes />}> 
+            <Route path="/search-bar" element={<SearchBar 
+                onSearch={onSearch}
+                search={search}
+                setSearch={setSearch}
+                liElement={liElement}
+                setLiElement={setLiElement}
+                nasaPhoto={nasaPhoto}
+                // testMe={testMe}
+             />}/>
+
+       </Route>
     </Routes> 
     </Layout>
     
