@@ -1,5 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import './Login.css';
+import { useContext } from "react";
+import { LoginContext } from "../../Context/LoginContext";
 
 
 const Login = (props) => {
@@ -12,11 +14,12 @@ const {
     handleSignUp,
     hasAccount,
     setHasAccount,
-    isAuthenticated,
+    // isAuthenticated,
     handleAuthState,
     emailError,
     deleteUser
 } = props;
+const { isAuthenticated } = useContext(LoginContext);
 
 
 

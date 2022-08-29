@@ -20,16 +20,9 @@ function App() {
     const [password, setPassword] = useState('');
     const [hasAccount, setHasAccount] = useState(false);
     const [emailError, setEmailError] = useState('');
-    // const [test, megaTest] = useState(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(() => {
-      setIsAuthenticated(JSON.parse(window.sessionStorage.getItem('isAuthenticated')))
-      },[])
-
-    useEffect(() => {
-      window.sessionStorage.setItem('isAuthenticated', isAuthenticated)
-    }, [isAuthenticated]) 
+    
 
 
   const handleSignUp = () => {
@@ -120,41 +113,21 @@ useEffect(() => {
 
 // API requests 
 
-    const [search, setSearch] = useState([]);
-    const [nasaPhoto, setNasaPhoto] = useState([]);
-    const [liElement, setLiElement] = useState([]);
-    
-
-     const URL = "https://images-api.nasa.gov/search?q=";
-    
-    const onSearch = (e) => {
-        
-        clearSearch();
-        // Request 
-        fetch(`${URL}${search}`)
-        .then(data=> data.json())
-        .then(output => {
-            let collections = output.collection.items.filter((item) => item.data[0].media_type === 'image');
-            setNasaPhoto(prevState =>  [...prevState ,collections]); 
-            
-         })
-         .catch(err => console.log(err));
-        
- }
-
-    const clearSearch = () => {
-      setNasaPhoto("");
-      setLiElement("");
-    }
-
     
 
     
+
+    // useEffect(() => {
+    //   setIsAuthenticated(JSON.parse(window.sessionStorage.getItem('isAuth')))
+    //   },[])
+
+    // useEffect(() => {
+    //   window.sessionStorage.setItem('isAuth', isAuthenticated)
+    // }, [isAuthenticated]) 
 
 
   return (
     <>
-    <button onClick={() => console.log(isAuthenticated)}>Test</button>
     <Layout 
     isAuthenticated={isAuthenticated}
     setIsAuthenticated={setIsAuthenticated}
@@ -176,20 +149,19 @@ useEffect(() => {
                 handleAuthState={handleAuthState}
                 emailError={emailError}
                 deleteUser={deleteUser}
-                isAuthenticated={isAuthenticated}
+               
             />} />
 
        <Route element={<PrivateRoutes />}> 
 
-         
-            <Route path="/search-bar" element={<SearchBar 
-                onSearch={onSearch}
-                search={search}
-                setSearch={setSearch}
-                liElement={liElement}
-                setLiElement={setLiElement}
-                nasaPhoto={nasaPhoto}
-                // testMe={testMe}
+             <Route path="/search-bar" element={<SearchBar 
+                // onSearch={onSearch}
+                // search={search}
+                // setSearch={setSearch}
+                // liElement={liElement}
+                // setLiElement={setLiElement}
+                // nasaPhoto={nasaPhoto}
+  
              />}/>
 
        </Route>
