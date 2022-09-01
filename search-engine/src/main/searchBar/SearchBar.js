@@ -15,10 +15,12 @@ const SearchBar = ({
 
     const [search, setSearch] = useState([]);
     const [nasaPhoto, setNasaPhoto] = useState([]);
-    const [liElement, setLiElement] = useState([]);
-    
+    const [picInfo, setPicInfo] = useState([])
 
-     const URL = "https://images-api.nasa.gov/search?q=";
+    const [imgElement, setimgElement] = useState([]);
+    const [descElement, setDescElement] = useState([]);
+
+    const URL = "https://images-api.nasa.gov/search?q=";
     
     const onSearch = (e) => {
         
@@ -31,31 +33,37 @@ const SearchBar = ({
         .then(output => {
 
         let collections = output.collection.items.filter((item) => item.data[0].media_type === 'image')
-            
-           for(let i = 0 ; i < 6; i++){
+            for(let i = 6 ; i < 18; i+=2){
                 let images = collections[i].links[0].href
-                setNasaPhoto((prevState) => [...prevState, images]); 
-             }
-            
+                let description = collections[i].data[0].description
+                
 
+                setNasaPhoto((prevState) => [...prevState, images]); 
+                setPicInfo((prevState) => [...prevState, description])
+             }
          })
          .catch(err => console.log(err));
  }
 
-
-
     const clearSearch = () => {
-      setNasaPhoto([ ]);
-      setLiElement([]);
-
+      setNasaPhoto([]);
+      setimgElement([]);
+      setPicInfo([])
     }
 
   useEffect(() => {
-    const liElMap = nasaPhoto.map((ele) =>{
-        return <img src={ele} />
+        const imgElMap = nasaPhoto.map((ele) =>{
+            return <img key={ele} src={ele} />
+         })
+        setimgElement(imgElMap)
+    
 
-    })
-    setLiElement(liElMap)
+        const description = picInfo.map((ele) =>{
+            return <p>{ele}</p>
+         })
+        setDescElement(description)
+   
+    
   },[nasaPhoto])
 
     
@@ -68,9 +76,10 @@ const SearchBar = ({
         
        </form>
             {nasaPhoto.length > 0?
-            <>
-             {liElement}
-            </>
+            <div>
+             {imgElement}
+             {descElement}
+            </div>
             : ''}
         </div>
 
