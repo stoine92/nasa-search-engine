@@ -1,5 +1,5 @@
 import './SearchBar.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 const SearchBar = ({
@@ -23,36 +23,40 @@ const SearchBar = ({
     const onSearch = (e) => {
         
       e.preventDefault();
-        clearSearch();
+      clearSearch();
 
         // Request 
         fetch(`${URL}${search}`)
         .then(data=> data.json())
         .then(output => {
+
         let collections = output.collection.items.filter((item) => item.data[0].media_type === 'image')
             
            for(let i = 0 ; i < 6; i++){
                 let images = collections[i].links[0].href
                 setNasaPhoto((prevState) => [...prevState, images]); 
              }
-            const liElMap = nasaPhoto.map((ele,idx) =>{
-                return <li key={idx}>{ele}</li>
-            })
-            // console.log(liElement);
-            setLiElement(liElMap)
+            
 
          })
          .catch(err => console.log(err));
  }
 
+
+
     const clearSearch = () => {
-      setNasaPhoto("");
-      setLiElement("");
+      setNasaPhoto([ ]);
+      setLiElement([]);
+
     }
 
-    // const liItem = nasaPhoto.map((element) => {
-    //     <li>{element.href}</li>
-    // })
+  useEffect(() => {
+    const liElMap = nasaPhoto.map((ele) =>{
+        return <img src={ele} />
+
+    })
+    setLiElement(liElMap)
+  },[nasaPhoto])
 
     
 
