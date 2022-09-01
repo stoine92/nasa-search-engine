@@ -2,13 +2,16 @@ header {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background-color: #24252a;
+    /* background-color: #24252a;
+     */
+    background-color: rgb(15, 77, 85);
+
 
     display: flex;
     justify-content:  flex-end;
     align-items: center;
     padding: 15px 10%;
-    border-bottom: 5px solid white;
+    
 }
 
 
