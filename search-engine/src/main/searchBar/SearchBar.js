@@ -1,5 +1,6 @@
 import './SearchBar.css'
 import { useEffect, useState } from 'react';
+import searchImg from '../../pictures/images.png'
 
 
 const SearchBar = ({
@@ -70,9 +71,9 @@ const SearchBar = ({
 
     return (
         <div className='main-search'>
-        <form type='submit'>
+        <form type='submit' className="search-form">
             <input type="text" placeholder="Search..." name='search' value={search}  onChange={(e) => setSearch(e.target.value)} />
-        <button type='submit' onClick={onSearch}>Search</button>
+        <button type='submit' onClick={onSearch}><img src={searchImg}/></button>
         
        </form>
             {nasaPhoto.length > 0?

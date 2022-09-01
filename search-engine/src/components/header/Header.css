@@ -8,6 +8,7 @@ header {
     justify-content:  flex-end;
     align-items: center;
     padding: 15px 10%;
+    border-bottom: 5px solid white;
 }
 
 

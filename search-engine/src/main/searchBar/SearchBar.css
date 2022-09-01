@@ -1,4 +1,55 @@
-.main-search { 
-    background-image: url('../../pictures/second.jpeg');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
     
+}
+
+.main-search { 
+    background-image: url('../../pictures/background.jpeg');
+    width: 100%;
+    min-height: 100vh;
+    padding: 5%;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.search-form {
+    width: 100%;
+    max-width: 700px;
+    background: rgba(247, 243, 243, 0.8);
+    display: flex;
+    align-items: center;
+    border-radius: 35px;
+    padding: 10px 20px;
+}
+
+.search-form input { 
+    background: transparent;
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: 24px 20px;
+    font-size: 25px;
+    color: #020207;
+}
+
+::placeholder{
+    color: #333346;
+}
+.search-form button img {
+    width: 25px;
+}
+
+.search-form button {
+    border: 0;
+    border-radius: 60%;
+    width: 60px;
+    height: 60px;
+    background: #fdfdfd;
+    cursor: pointer;
 }
