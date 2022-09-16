@@ -53,3 +53,15 @@
     background: #fdfdfd;
     cursor: pointer;
 }
+
+
+/* pictures css */
+
+.imgDiv {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    margin: 20px;
+    padding: 20px;
+}
