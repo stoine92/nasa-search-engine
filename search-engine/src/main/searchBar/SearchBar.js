@@ -34,7 +34,7 @@ const SearchBar = ({
         .then(output => {
 
         let collections = output.collection.items.filter((item) => item.data[0].media_type === 'image')
-            for(let i = 3 ; i < 9; i+=2){
+            for(let i = 6 ; i < 18; i+=2){
                 let images = collections[i].links[0].href
                 let description = collections[i].data[0].description
                 
@@ -54,7 +54,7 @@ const SearchBar = ({
 
   useEffect(() => {
         const imgElMap = nasaPhoto.map((ele) =>{
-            return <div className='imgDiv'><img key={ele} src={ele} /></div>
+            return <img className="img-style" key={ele} src={ele} />
          })
         setimgElement(imgElMap)
     
@@ -70,21 +70,26 @@ const SearchBar = ({
     
 
     return (
+        <div className='test-div'>
         <div className='main-search'>
         <form type='submit' className="search-form">
             <input type="text" placeholder="Search..." name='search' value={search}  onChange={(e) => setSearch(e.target.value)} />
         <button type='submit' onClick={onSearch}><img src={searchImg}/></button>
         
        </form>
-            {nasaPhoto.length > 0?
             
-                <div className="container">
-                    {imgElement}
-                    {descElement}
-                 </div>
-              : ''}
         </div>
-
+    
+        {nasaPhoto.length > 0?
+            
+            <div className="container">
+                {imgElement}
+                {/* {descElement} */}
+             </div>
+          : ''}
+             
+        </div>
+        
             
     )
 }
