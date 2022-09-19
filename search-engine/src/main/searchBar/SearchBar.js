@@ -34,11 +34,11 @@ const SearchBar = ({
         .then(output => {
 
         let collections = output.collection.items.filter((item) => item.data[0].media_type === 'image')
-            for(let i = 6 ; i < 18; i+=2){
+            for(let i = 0 ; i < 9; i += 1){
                 let images = collections[i].links[0].href
-                let description = collections[i].data[0].description
+                let description = collections[i].data[0].title
+                // console.log(collections[i].data[0].title);
                 
-
                 setNasaPhoto((prevState) => [...prevState, images]); 
                 setPicInfo((prevState) => [...prevState, description])
              }
@@ -52,18 +52,26 @@ const SearchBar = ({
       setPicInfo([])
     }
 
+
   useEffect(() => {
+
+    const description = picInfo.map((ele) =>{
+        return <p>{ele}</p>
+     })
+    setDescElement(description)
+
         const imgElMap = nasaPhoto.map((ele) =>{
-            return <img className="img-style" key={ele} src={ele} />
+            return (
+                <>
+                <img className="img-style" key={ele} src={ele} />
+                {descElement}
+                </>
+            )
          })
         setimgElement(imgElMap)
     
 
-        const description = picInfo.map((ele) =>{
-            return <p>{ele}</p>
-         })
-        setDescElement(description)
-        //  console.log(descElement);
+        
     
   },[nasaPhoto])
 
